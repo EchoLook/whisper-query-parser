@@ -10,6 +10,7 @@ An application for transcribing voice to text using Whisper and generating struc
 - **Query Generation** - Generate structured API queries from natural language using Gemini AI
 - **Image Context** - Include images as reference for context-aware query generation
 - **Responsive UI** - User-friendly interface built with Gradio
+- **REST API** - Access all functionality through a RESTful API for integration with other services
 
 ## Setup
 
@@ -52,6 +53,8 @@ An application for transcribing voice to text using Whisper and generating struc
 
 ## Usage
 
+### Web Interface
+
 1. Start the application:
    ```bash
    python app.py
@@ -66,6 +69,97 @@ An application for transcribing voice to text using Whisper and generating struc
    - Either upload an audio file or record with your microphone
    - Click "Transcribe" to get the text result
    - Click "Generate Structured Query" to create a JSON query
+
+### API
+
+VoiceQuery also provides a REST API that allows integration with other applications and services.
+
+1. Start the API server:
+   ```bash
+   python api_run.py
+   ```
+
+2. The API server will be available at http://localhost:8000 (configurable through arguments or environment variables)
+
+3. API Endpoints:
+   - `GET /` - Basic API information
+   - `POST /transcribe` - Transcribe an audio file
+   - `POST /generate-query` - Generate a structured query from transcribed text
+   - `POST /process` - Process audio file and optional image into a structured query
+
+4. API Documentation:
+   - Interactive API documentation available at http://localhost:8000/docs
+   - ReDoc version available at http://localhost:8000/redoc
+
+#### Example API Usage
+
+##### Transcribe Audio
+
+```bash
+curl -X POST "http://localhost:8000/transcribe" \
+  -H "accept: application/json" \
+  -F "audio_file=@your_audio.wav" \
+  -F "language=en"
+```
+
+Response:
+```json
+{
+  "success": true,
+  "transcription": "Text transcribed from the audio file"
+}
+```
+
+##### Generate Query from Transcription
+
+```bash
+curl -X POST "http://localhost:8000/generate-query" \
+  -H "accept: application/json" \
+  -F "transcription=Me gustaría una camiseta azul de manga corta" \
+  -F "image=@reference_image.jpg"
+```
+
+Response:
+```json
+{
+  "success": true,
+  "transcription": "Me gustaría una camiseta azul de manga corta",
+  "query": {
+    "items": [
+      {
+        "description": "camiseta azul manga corta",
+        "max_price": null
+      }
+    ]
+  }
+}
+```
+
+##### Full Processing (Audio to Query)
+
+```bash
+curl -X POST "http://localhost:8000/process" \
+  -H "accept: application/json" \
+  -F "audio_file=@your_audio.wav" \
+  -F "image=@reference_image.jpg" \
+  -F "language=es"
+```
+
+Response:
+```json
+{
+  "success": true,
+  "transcription": "Me gustaría una camiseta azul de manga corta",
+  "query": {
+    "items": [
+      {
+        "description": "camiseta azul manga corta",
+        "max_price": null
+      }
+    ]
+  }
+}
+```
 
 ### Example Use Cases
 
@@ -111,6 +205,7 @@ Generated Query:
 - **Query generation not working**: Make sure you have set up the `GOOGLE_API_KEY` environment variable with a valid API key.
 - **Audio processing error**: Check that FFmpeg is installed on your system.
 - **Memory issues with large models**: Try using a smaller Whisper model or split large audio files into smaller segments.
+- **API connection issues**: Check that you're connecting to the correct port and that the API server is running.
 
 ## License
 
@@ -121,14 +216,18 @@ Generated Query:
 - [OpenAI Whisper](https://github.com/openai/whisper) for speech-to-text capabilities
 - [Google Gemini](https://ai.google.dev/docs/gemini_api_overview) for query generation
 - [Gradio](https://www.gradio.app/) for the user interface
+- [FastAPI](https://fastapi.tiangolo.com/) for the API framework
 
 ## Project Structure
 
 - `app.py`: Main application entry point with Gradio interface
-- `run.py`: Launcher script with command-line options
+- `run.py`: Launcher script with command-line options for the web interface
+- `api.py`: FastAPI implementation for the REST API
+- `api_run.py`: Launcher script for the API server
 - `utils/`: Utility functions for audio processing and transcription
   - `audio_processing.py`: Functions for loading and processing audio
   - `transcription.py`: Functions for transcribing audio with Whisper
+  - `query_generation.py`: Functions for generating structured queries
 - `models/`: Model configurations
 - `configs/`: Configuration files
   - `whisper_config.py`: Configuration for Whisper models
@@ -156,6 +255,11 @@ pytest
   - Integrate with language models
   - Process transcribed text into structured queries
   - Extend the UI to display both transcription and queries
+
+- Phase 3: API and Services
+  - Optimize API performance
+  - Add authentication and rate limiting
+  - Develop client libraries for common languages
 
 ## Acknowledgements
 

@@ -21,7 +21,17 @@
 - [x] Expandir la interfaz para mostrar transcripción y consulta generada
 
 ## API
-- [ ] Creacion de API Rest para poder utilizar el servicio, mandando un audio y una imagen opcional y devolviendo un json
+- [x] Implementar API REST con FastAPI para transcripción y generación de consultas
+- [x] Crear documentación de la API para desarrolladores
+- [ ] Implementar pruebas de integración para la API
+- [ ] Optimizar rendimiento de la API para múltiples peticiones simultáneas
+
+## Tareas a Futuro (Fase 4: Mejoras API)
+- [ ] Implementar autenticación para la API
+- [ ] Añadir limitación de tasa para la API
+- [ ] Crear bibliotecas cliente para lenguajes comunes (JavaScript, Python)
+- [ ] Habilitar opciones de configuración avanzadas a través de la API
+- [ ] Añadir endpoint para procesamiento por lotes de múltiples archivos
 
 ## Hitos del Proyecto
 
@@ -37,6 +47,12 @@
 7. **Versión 1.2**: Implementación completa de generación de consultas estructuradas
 8. **Versión 1.3**: Mejora de precisión y relevancia en las consultas generadas
 9. **Versión 2.0**: Producto final con integración completa de transcripción y generación de consultas
+
+### Fase 3: API y Servicios Externos
+10. **Versión 2.1**: API REST básica para acceso programático
+11. **Versión 2.2**: Documentación completa de la API y ejemplos de uso
+12. **Versión 2.3**: Optimizaciones de rendimiento y seguridad
+13. **Versión 3.0**: Producto final con interfaz gráfica y API para integración con otros servicios
 
 ## Problemas y Descubrimientos
 - Pendiente de identificar limitaciones de hardware para modelos grandes de Whisper
@@ -60,6 +76,9 @@
 - [x] Implementar el módulo de procesamiento de texto transcrito
 - [x] Desarrollar la función de generación de consultas estructuradas
 - [x] Expandir la interfaz para mostrar transcripción y consulta generada
+- [x] Implementar API REST con FastAPI para transcripción y generación de consultas
+- [x] Crear documentación de la API para desarrolladores
+- [x] Desarrollar cliente de ejemplo para la API
 
 ## Notas
 - Para actualizar este archivo: *"Update TASK.md to mark XYZ as done and add ABC as a new task."*

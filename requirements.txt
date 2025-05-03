@@ -16,3 +16,6 @@ numpy
 soundfile
 google-generativeai
 python-dotenv
+fastapi>=0.100.0
+uvicorn>=0.23.0
+python-multipart
