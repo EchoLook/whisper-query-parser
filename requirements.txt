@@ -14,3 +14,5 @@ pillow
 whisper
 numpy
 soundfile
+google-generativeai
+python-dotenv

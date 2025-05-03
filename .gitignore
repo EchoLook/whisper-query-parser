@@ -70,3 +70,5 @@ output/
 results/
 *.json
 *.csv 
+*.png
+*.jpg

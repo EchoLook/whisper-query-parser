@@ -14,12 +14,14 @@
 - [x] Crear sistema de exportación de resultados para la IA (texto transcrito)
 
 ## Tareas Planificadas (Fase 2: Generación de Consultas)
-- [ ] Integrar la biblioteca de Google Generative AI para Gemini
-- [ ] Crear estructura para los prompt templates
-- [ ] Implementar el módulo de procesamiento de texto transcrito
-- [ ] Desarrollar la función de generación de consultas estructuradas
-- [ ] Expandir la interfaz para mostrar transcripción y consulta generada
-- [ ] Añadir opciones de configuración para el modelo Gemini
+- [x] Integrar la biblioteca de Google Generative AI para Gemini
+- [x] Crear estructura para los prompt templates
+- [x] Implementar el módulo de procesamiento de texto transcrito
+- [x] Desarrollar la función de generación de consultas estructuradas
+- [x] Expandir la interfaz para mostrar transcripción y consulta generada
+
+## API
+- [ ] Creacion de API Rest para poder utilizar el servicio, mandando un audio y una imagen opcional y devolviendo un json
 
 ## Hitos del Proyecto
 
@@ -53,6 +55,11 @@
 - [x] Integrar el modelo Whisper para transcripción
 - [x] Desarrollar la interfaz de usuario con Gradio
 - [x] Implementar la función de grabación de audio en tiempo real
+- [x] Integrar la biblioteca de Google Generative AI para Gemini
+- [x] Crear estructura para los prompt templates
+- [x] Implementar el módulo de procesamiento de texto transcrito
+- [x] Desarrollar la función de generación de consultas estructuradas
+- [x] Expandir la interfaz para mostrar transcripción y consulta generada
 
 ## Notas
 - Para actualizar este archivo: *"Update TASK.md to mark XYZ as done and add ABC as a new task."*

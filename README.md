@@ -1,74 +1,126 @@
 # VoiceQuery
 
-A Python application that transcribes voice to text using OpenAI's Whisper model, with future plans to process transcribed text into structured queries using language models.
+An application for transcribing voice to text using Whisper and generating structured queries with Gemini.
 
 ## Features
 
-- Upload audio files for transcription
-- Record audio in real-time
-- Transcribe audio to text using Whisper
-- Multiple model size options (tiny, base, small, medium, large)
-- Support for multiple languages
-- User-friendly interface built with Gradio
+- **Speech-to-Text** - Transcribe uploaded audio files or record directly using your microphone
+- **Multiple Languages** - Support for various languages with automatic language detection
+- **Configurable Models** - Choose from different Whisper model sizes based on accuracy/speed needs
+- **Query Generation** - Generate structured API queries from natural language using Gemini AI
+- **Image Context** - Include images as reference for context-aware query generation
+- **Responsive UI** - User-friendly interface built with Gradio
 
-## Installation
+## Setup
 
-1. Clone this repository
-2. Install dependencies:
+### Prerequisites
+
+- Python 3.8 or higher
+- FFmpeg (for audio processing)
+
+### Installation
+
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/yourusername/VoiceQuery.git
+   cd VoiceQuery
    ```
+
+2. Create a virtual environment and activate it:
+   ```bash
+   python -m venv venv
+   source venv/bin/activate  # Linux/Mac
+   # OR
+   venv\Scripts\activate  # Windows
+   ```
+
+3. Install dependencies:
+   ```bash
    pip install -r requirements.txt
    ```
-3. Make sure you have FFmpeg installed on your system
-   - On Ubuntu: `sudo apt-get install ffmpeg`
-   - On macOS: `brew install ffmpeg`
-   - On Windows: Download from [FFmpeg website](https://ffmpeg.org/download.html)
+
+4. Set up environment variables:
+   - Copy the `.env.example` file to `.env`
+   ```bash
+   cp .env.example .env
+   ```
+   - Edit the `.env` file and add your Google API key for Gemini:
+   ```
+   GOOGLE_API_KEY=your_gemini_api_key_here
+   ```
+   - Get your API key from [Google AI Studio](https://makersuite.google.com/app/apikey)
 
 ## Usage
 
-There are multiple ways to run the application:
+1. Start the application:
+   ```bash
+   python app.py
+   ```
 
-### Using the run.py script (recommended)
+2. Open your web browser and go to the URL displayed in the terminal (typically http://127.0.0.1:7860)
 
-```bash
-./run.py
+3. Using the interface:
+   - Select a Whisper model (tiny, base, small, medium, large)
+   - Choose a language or use auto-detect
+   - Upload a reference image if needed (for both tabs)
+   - Either upload an audio file or record with your microphone
+   - Click "Transcribe" to get the text result
+   - Click "Generate Structured Query" to create a JSON query
+
+### Example Use Cases
+
+#### Fashion E-Commerce
+
+Speech: "Me gusta el conjunto pero quiero una camiseta azul en vez de rosa y me gustaría que fuera barata"
+
+Generated Query:
+```json
+{
+  "items": [
+    {
+      "product_type": "camiseta",
+      "color": "azul",
+      "price_range": {
+        "min": 0,
+        "max": 20
+      }
+    }
+  ]
+}
 ```
 
-Optional arguments:
-- `--port PORT`: Port to run the Gradio interface on (default: 7860)
-- `--host HOST`: Host to run the Gradio interface on (default: 0.0.0.0)
-- `--share`: Create a public link for the interface
-- `--debug`: Run in debug mode
+Speech with Image: "El vestido es chulo pero no me convence, vamos a probar con unos vaqueros y una camiseta del mismo color"
 
-Example:
-```bash
-./run.py --port 8000 --share
+Generated Query:
+```json
+{
+  "items": [
+    {
+      "product_type": "vaqueros"
+    },
+    {
+      "product_type": "camiseta",
+      "color": "same as dress in image"
+    }
+  ]
+}
 ```
 
-### Using app.py directly
+## Troubleshooting
 
-```bash
-python app.py
-```
+- **Query generation not working**: Make sure you have set up the `GOOGLE_API_KEY` environment variable with a valid API key.
+- **Audio processing error**: Check that FFmpeg is installed on your system.
+- **Memory issues with large models**: Try using a smaller Whisper model or split large audio files into smaller segments.
 
-### Using the modules directly
+## License
 
-See the examples in the `examples/` directory for how to use the modules directly in your code.
+[MIT License](LICENSE)
 
-Example:
-```python
-from utils.audio_processing import load_audio
-from utils.transcription import WhisperTranscriber
+## Acknowledgements
 
-# Load the transcriber
-transcriber = WhisperTranscriber(model_name="base")
-
-# Load and preprocess an audio file
-audio_data = load_audio("path/to/audio.mp3")
-
-# Transcribe the audio
-result = transcriber.transcribe(audio_data)
-print(result.text)
-```
+- [OpenAI Whisper](https://github.com/openai/whisper) for speech-to-text capabilities
+- [Google Gemini](https://ai.google.dev/docs/gemini_api_overview) for query generation
+- [Gradio](https://www.gradio.app/) for the user interface
 
 ## Project Structure
 

@@ -2,12 +2,15 @@
 VoiceQuery - Voice to Text Application using Whisper.
 
 This application provides a Gradio-based interface for transcribing
-speech to text using OpenAI's Whisper model.
+speech to text using OpenAI's Whisper model and generating structured queries
+using Google's Gemini model.
 """
 import os
 import tempfile
 from typing import Dict, Optional, Tuple, Union
 from pathlib import Path
+import json
+from dotenv import load_dotenv
 
 import gradio as gr
 import numpy as np
@@ -18,19 +21,31 @@ import whisper
 
 from utils.audio_processing import load_audio, preprocess_recorded_audio
 from utils.transcription import WhisperTranscriber
+from utils.query_generation import QueryGenerator
 from audio_processing.optimizer import split_audio, optimize_whisper_config, manage_memory
 from export.transcript_exporter import TranscriptExporter
 
+# Load environment variables from .env file
+load_dotenv()
 
-# Initialize the transcriber with the base model
-# Users can later select a different model in the interface
-transcriber = WhisperTranscriber(model_name="base")
+# Initialize the transcriber with the base model from .env or default to "base"
+model_name = os.getenv("WHISPER_MODEL", "base")
+transcriber = WhisperTranscriber(model_name=model_name)
 
 # Instanciar el exportador
-exporter = TranscriptExporter()
+export_dir = os.getenv("EXPORT_DIR", "exports")
+exporter = TranscriptExporter(export_dir=export_dir)
 
 # Cargar modelo de Whisper
-model = whisper.load_model("base")
+model = whisper.load_model(model_name)
+
+# Initialize QueryGenerator (will use API key from .env)
+try:
+    query_generator = QueryGenerator()
+except ValueError:
+    query_generator = None
+    print("Warning: Google API key not found in .env file. Query generation will be disabled.")
+    print("Add GOOGLE_API_KEY=your_key to your .env file to enable query generation.")
 
 
 def transcribe_audio_file(audio_file: str, model_name: str, language: Optional[str] = None) -> str:
@@ -109,6 +124,52 @@ def transcribe_recorded_audio(audio_data: Tuple[int, np.ndarray], model_name: st
         return f"Error durante la transcripción: {str(e)}"
 
 
+def generate_query_from_transcript(transcript: str, image: Optional[Union[str, Image.Image]] = None) -> str:
+    """
+    Generate a structured query from transcribed text using Gemini.
+    
+    Args:
+        transcript: The transcribed speech text
+        image: Optional image path or image object
+        
+    Returns:
+        Formatted JSON string with the structured query
+    """
+    if not transcript or transcript.strip() == "":
+        return json.dumps({"error": "No text to process."}, indent=2)
+    
+    # Handle missing query generator (API key not configured)
+    global query_generator
+    if query_generator is None:
+        return json.dumps({
+            "error": "Query generation is not available. Please set the GOOGLE_API_KEY environment variable and restart the application."
+        }, indent=2)
+    
+    # Handle the image input
+    image_path = None
+    if image is not None:
+        # If image is a filepath string
+        if isinstance(image, str) and os.path.exists(image):
+            image_path = image
+        # If image is uploaded through Gradio
+        elif hasattr(image, 'name') and os.path.exists(image.name):
+            image_path = image.name
+        # If image is a PIL Image
+        elif isinstance(image, Image.Image):
+            # Save to temp file
+            temp_dir = tempfile.gettempdir()
+            image_path = os.path.join(temp_dir, "uploaded_image.jpg")
+            image.save(image_path)
+    
+    try:
+        return query_generator.generate_query_text(transcript, image_path)
+    except Exception as e:
+        return json.dumps({
+            "error": f"Error generating query: {str(e)}",
+            "transcript": transcript
+        }, indent=2)
+
+
 def create_gradio_interface():
     """
     Create and configure the Gradio interface.
@@ -144,9 +205,10 @@ def create_gradio_interface():
             self.block_title_text_weight = "600"
 
     with gr.Blocks(theme=VoiceQueryTheme()) as interface:
-        gr.Markdown("# 🎙️ VoiceQuery: Voice to Text with Whisper")
+        gr.Markdown("# 🎙️ VoiceQuery: Voice to Text with Whisper + Gemini")
         gr.Markdown("""
         Upload an audio file or record your voice to transcribe it to text using OpenAI's Whisper model.
+        Then generate structured queries for e-commerce API using Google's Gemini model.
         """)
         
         with gr.Row():
@@ -164,10 +226,20 @@ def create_gradio_interface():
                     info="Choose the language or leave as Auto-detect"
                 )
         
-        with gr.Tabs():
-            with gr.TabItem("Upload Audio"):
-                audio_file = gr.Audio(type="filepath", label="Upload Audio File")
-                upload_button = gr.Button("Transcribe Uploaded Audio")
+        # Create a shared image input that will be used by both tabs
+        shared_image = gr.Image(
+            type="pil", 
+            label="Upload Reference Image (Optional)",
+            elem_id="shared_image"
+        )
+            
+        with gr.Tabs() as tabs:
+            with gr.TabItem("Upload Audio") as tab_upload:
+                with gr.Row():
+                    with gr.Column(scale=1):
+                        audio_file = gr.Audio(type="filepath", label="Upload Audio File")
+                        upload_button = gr.Button("Transcribe Uploaded Audio")
+                
                 upload_output = gr.Textbox(label="Transcription Result", lines=8)
                 
                 upload_button.click(
@@ -175,15 +247,28 @@ def create_gradio_interface():
                     inputs=[audio_file, model_dropdown, language_dropdown],
                     outputs=upload_output
                 )
-            
-            with gr.TabItem("Record Audio"):
-                audio_recorder = gr.Audio(
-                    sources=["microphone"], 
-                    type="numpy", 
-                    label="Record Audio",
-                    interactive=True
+                
+                # Add query generation section
+                query_button = gr.Button("Generate Structured Query")
+                query_output = gr.JSON(label="Generated Query")
+                
+                query_button.click(
+                    fn=generate_query_from_transcript,
+                    inputs=[upload_output, shared_image],
+                    outputs=query_output
                 )
-                record_button = gr.Button("Transcribe Recorded Audio")
+            
+            with gr.TabItem("Record Audio") as tab_record:
+                with gr.Row():
+                    with gr.Column(scale=1):
+                        audio_recorder = gr.Audio(
+                            sources=["microphone"], 
+                            type="numpy", 
+                            label="Record Audio",
+                            interactive=True
+                        )
+                        record_button = gr.Button("Transcribe Recorded Audio")
+                
                 record_output = gr.Textbox(label="Transcription Result", lines=8)
                 
                 record_button.click(
@@ -192,13 +277,65 @@ def create_gradio_interface():
                     outputs=record_output
                 )
                 
+                # Add query generation section for recorded audio
+                query_button_record = gr.Button("Generate Structured Query")
+                query_output_record = gr.JSON(label="Generated Query")
+                
+                query_button_record.click(
+                    fn=generate_query_from_transcript,
+                    inputs=[record_output, shared_image],
+                    outputs=query_output_record
+                )
+                
                 # Add a clear button for the recorder
                 clear_button = gr.Button("Clear Recorder")
                 clear_button.click(
                     fn=lambda: None,
                     inputs=[],
-                    outputs=[audio_recorder, record_output]
+                    outputs=[audio_recorder, record_output, query_output_record]
                 )
+        
+        # Add the shared image to both tabs using JavaScript
+        # This ensures the image state is maintained when switching tabs
+        gr.HTML("""
+        <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Function to move the shared image element to the current tab
+            function moveImageToTab() {
+                const sharedImage = document.getElementById('shared_image').parentElement.parentElement;
+                const activeTab = document.querySelector('.tabitem.selected');
+                
+                if (activeTab && sharedImage) {
+                    const targetRow = activeTab.querySelector('.row');
+                    if (targetRow) {
+                        // Create or get the second column if it doesn't exist
+                        let secondColumn = targetRow.querySelector('.col:nth-child(2)');
+                        if (!secondColumn) {
+                            secondColumn = document.createElement('div');
+                            secondColumn.classList.add('col');
+                            secondColumn.style.flex = '1 1 0%';
+                            targetRow.appendChild(secondColumn);
+                        }
+                        
+                        // Move the shared image to the second column
+                        secondColumn.appendChild(sharedImage);
+                    }
+                }
+            }
+            
+            // Move image on initial load
+            setTimeout(moveImageToTab, 500);
+            
+            // Move image when tabs change
+            const tabButtons = document.querySelectorAll('[id^="tab_"]');
+            tabButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    setTimeout(moveImageToTab, 100);
+                });
+            });
+        });
+        </script>
+        """)
         
         # Add a status message area
         status = gr.Markdown("")
@@ -207,12 +344,13 @@ def create_gradio_interface():
         ## 📋 How to Use
         1. Select a Whisper model (larger models are more accurate but slower)
         2. Optionally select a language (or leave as Auto-detect)
-        3. Either upload an audio file or record your voice
-        4. Click the "Transcribe" button to get the text result
+        3. Upload a reference image if needed (the image will be used for both tabs)
+        4. Either upload an audio file or record your voice in the respective tab
+        5. Click the "Transcribe" button to get the text result
+        6. Click "Generate Structured Query" to create a JSON query based on the transcription
         
         ## ℹ️ About
-        This application uses OpenAI's Whisper model to transcribe speech to text. 
-        It supports multiple languages and different model sizes for various accuracy/speed trade-offs.
+        This application uses OpenAI's Whisper model to transcribe speech to text and Google's Gemini model to generate structured queries for e-commerce APIs. It supports multiple languages and can process both audio and image inputs to generate context-aware queries.
         """)
     
     return interface
