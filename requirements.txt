@@ -1,6 +1,5 @@
 openai
 whisper-openai
-gradio
 numpy
 torch
 librosa
@@ -10,3 +9,8 @@ soundfile
 pytest
 black
 pydantic 
+gradio>=3.50.0
+pillow
+whisper
+numpy
+soundfile

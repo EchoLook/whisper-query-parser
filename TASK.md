@@ -9,10 +9,9 @@
 - [x] Implementar la función de grabación de audio en tiempo real
 
 ## Backlog (Fase 1: Transcripción)
-- [ ] Mejorar estetica general de la aplicacion
-- [ ] Optimizar el rendimiento para archivos de audio grandes
-- [ ] Crear sistema de exportación de resultados (JSON)
-- [ ] Desarrollar funciones para segmentación de audio
+- [x] Mejorar estetica general de la aplicacion
+- [x] Optimizar el rendimiento para archivos de audio grandes
+- [x] Crear sistema de exportación de resultados para la IA (texto transcrito)
 
 ## Tareas Planificadas (Fase 2: Generación de Consultas)
 - [ ] Integrar la biblioteca de Google Generative AI para Gemini
