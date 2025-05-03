@@ -1,3 +1,3 @@
 """
-Utility modules for the VoiceQuery project.
+Utility modules for the whisper-query-parser project.
 """ 

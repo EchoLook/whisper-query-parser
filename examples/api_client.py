@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """
-Example client for the VoiceQuery API.
+Example client for the whisper-query-parser API.
 
-This script demonstrates how to interact with the VoiceQuery API 
+This script demonstrates how to interact with the whisper-query-parser API 
 using Python's requests library.
 """
 import os
@@ -175,13 +175,13 @@ def process_audio_to_query(base_url, audio_file_path, image_path=None, language=
 
 def main():
     """Main entry point for the API client example."""
-    parser = argparse.ArgumentParser(description="VoiceQuery API Client Example")
+    parser = argparse.ArgumentParser(description="whisper-query-parser API Client Example")
     
     parser.add_argument(
         "--url", 
         type=str, 
         default="http://localhost:8000", 
-        help="Base URL of the VoiceQuery API"
+        help="Base URL of the whisper-query-parser API"
     )
     
     parser.add_argument(

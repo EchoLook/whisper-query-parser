@@ -1,4 +1,4 @@
-# Tareas del Proyecto VoiceQuery
+# Tareas del Proyecto whisper-query-parser
 
 ## Tareas Activas
 - [x] Configurar el entorno de desarrollo con todas las dependencias

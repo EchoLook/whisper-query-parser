@@ -1,5 +1,5 @@
 """
-Example of how to use the VoiceQuery modules directly.
+Example of how to use the whisper-query-parser modules directly.
 """
 import os
 import sys

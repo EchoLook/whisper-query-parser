@@ -1,10 +1,10 @@
-# VoiceQuery API Documentation
+# whisper-query-parser API Documentation
 
-This document provides a comprehensive guide to using the VoiceQuery API for speech transcription and structured query generation.
+This document provides a comprehensive guide to using the whisper-query-parser API for speech transcription and structured query generation.
 
 ## Overview
 
-The VoiceQuery API allows you to:
+The whisper-query-parser API allows you to:
 
 1. Transcribe audio files to text using OpenAI's Whisper model
 2. Generate structured queries from transcribed text using Google's Gemini AI
@@ -14,7 +14,7 @@ The VoiceQuery API allows you to:
 
 ### Prerequisites
 
-- A running instance of the VoiceQuery API server
+- A running instance of the whisper-query-parser API server
 - Audio files for transcription (WAV, MP3, etc.)
 - Optional image files for context (JPEG, PNG)
 - An HTTP client for making API requests (e.g., curl, Python requests)

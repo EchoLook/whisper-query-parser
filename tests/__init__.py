@@ -1,3 +1,3 @@
 """
-Unit tests for the VoiceQuery project.
+Unit tests for the whisper-query-parser project.
 """ 

@@ -1,5 +1,5 @@
 """
-VoiceQuery API - REST API for the VoiceQuery service.
+whisper-query-parser API - REST API for the whisper-query-parser service.
 
 This module provides REST API endpoints to transcribe audio,
 process images, and generate structured queries for e-commerce applications.
@@ -41,7 +41,7 @@ except ValueError as e:
 
 # Create FastAPI app
 app = FastAPI(
-    title="VoiceQuery API",
+    title="whisper-query-parser API",
     description="API for transcribing audio and generating structured queries for e-commerce",
     version="1.0.0"
 )
@@ -124,7 +124,7 @@ def check_query_generator_available():
 async def root():
     """Root endpoint with basic API information."""
     return {
-        "name": "VoiceQuery API",
+        "name": "whisper-query-parser API",
         "version": "1.0.0",
         "description": "API for transcribing audio and generating structured queries"
     }

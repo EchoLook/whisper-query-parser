@@ -1,5 +1,5 @@
 """
-VoiceQuery - Voice to Text Application using Whisper.
+whisper-query-parser - Voice to Text Application using Whisper.
 
 This application provides a Gradio-based interface for transcribing
 speech to text using OpenAI's Whisper model and generating structured queries

@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Launcher script for the VoiceQuery application.
+Launcher script for the whisper-query-parser application.
 """
 import argparse
 import os
@@ -11,7 +11,7 @@ from app import create_gradio_interface
 
 def parse_arguments():
     """Parse command line arguments."""
-    parser = argparse.ArgumentParser(description="VoiceQuery - Voice to Text Application")
+    parser = argparse.ArgumentParser(description="whisper-query-parser - Voice to Text Application")
     
     parser.add_argument(
         "--port", 
@@ -46,7 +46,7 @@ def main():
     """Main entry point for the application."""
     args = parse_arguments()
     
-    print("Starting VoiceQuery application...")
+    print("Starting whisper-query-parser application...")
     print(f"Interface will be available at http://localhost:{args.port}")
     
     if args.share:
@@ -63,7 +63,7 @@ def main():
             debug=args.debug
         )
     except KeyboardInterrupt:
-        print("\nShutting down VoiceQuery application...")
+        print("\nShutting down whisper-query-parser application...")
     except Exception as e:
         print(f"Error starting the application: {e}")
         return 1

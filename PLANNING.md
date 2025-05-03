@@ -1,4 +1,4 @@
-# Planificación del Proyecto: VoiceQuery
+# Planificación del Proyecto: whisper-query-parser
 
 ## Visión General
 Este proyecto tiene como objetivo crear una aplicación que convierta voz en texto utilizando el modelo Whisper de OpenAI y, en su segunda versión, procese ese texto mediante un modelo de lenguaje como Gemini para generar consultas estructuradas. La aplicación se desarrollará en dos fases principales:
@@ -63,7 +63,7 @@ Entrada de Audio → Preprocesamiento → Transcripción con Whisper → Texto T
 
 ## Estructura del Proyecto
 ```
-VoiceQuery/
+whisper-query-parser/
 ├── app.py              # Punto de entrada de la aplicación
 ├── requirements.txt    # Dependencias del proyecto
 ├── README.md           # Documentación

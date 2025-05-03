@@ -1,5 +1,5 @@
 """
-Tests for the VoiceQuery API endpoints.
+Tests for the whisper-query-parser API endpoints.
 """
 import os
 import json

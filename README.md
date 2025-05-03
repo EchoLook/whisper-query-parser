@@ -1,4 +1,4 @@
-# VoiceQuery
+# whisper-query-parser
 
 An application for transcribing voice to text using Whisper and generating structured queries with Gemini.
 
@@ -23,8 +23,8 @@ An application for transcribing voice to text using Whisper and generating struc
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/yourusername/VoiceQuery.git
-   cd VoiceQuery
+   git clone https://github.com/yourusername/whisper-query-parser.git
+   cd whisper-query-parser
    ```
 
 2. Create a virtual environment and activate it:
@@ -72,7 +72,7 @@ An application for transcribing voice to text using Whisper and generating struc
 
 ### API
 
-VoiceQuery also provides a REST API that allows integration with other applications and services.
+whisper-query-parser also provides a REST API that allows integration with other applications and services.
 
 1. Start the API server:
    ```bash

@@ -1,3 +1,3 @@
 """
-Configuration modules for the VoiceQuery project.
+Configuration modules for the whisper-query-parser project.
 """ 

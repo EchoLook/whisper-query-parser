@@ -1,3 +1,3 @@
 """
-Examples for the VoiceQuery project.
+Examples for the whisper-query-parser project.
 """ 

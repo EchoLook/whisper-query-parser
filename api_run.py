@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Launcher script for the VoiceQuery API.
+Launcher script for the whisper-query-parser API.
 """
 import argparse
 import os
@@ -10,7 +10,7 @@ from dotenv import load_dotenv
 
 def parse_arguments():
     """Parse command line arguments."""
-    parser = argparse.ArgumentParser(description="VoiceQuery API Server")
+    parser = argparse.ArgumentParser(description="whisper-query-parser API Server")
     
     parser.add_argument(
         "--port", 
@@ -51,7 +51,7 @@ def main():
     host = os.getenv("API_HOST", args.host)
     port = int(os.getenv("API_PORT", args.port))
     
-    print(f"Starting VoiceQuery API server...")
+    print(f"Starting whisper-query-parser API server...")
     print(f"API will be available at http://{host}:{port}")
     
     if host == "0.0.0.0":
@@ -67,7 +67,7 @@ def main():
             workers=args.workers
         )
     except KeyboardInterrupt:
-        print("\nShutting down VoiceQuery API server...")
+        print("\nShutting down whisper-query-parser API server...")
     except Exception as e:
         print(f"Error starting the API server: {e}")
         return 1
