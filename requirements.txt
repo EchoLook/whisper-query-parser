@@ -1,0 +1,12 @@
+openai
+whisper-openai
+gradio
+numpy
+torch
+librosa
+pydub
+ffmpeg-python
+soundfile
+pytest
+black
+pydantic 

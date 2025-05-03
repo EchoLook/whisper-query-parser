@@ -1,0 +1,60 @@
+# Tareas del Proyecto VoiceQuery
+
+## Tareas Activas
+- [x] Configurar el entorno de desarrollo con todas las dependencias
+- [x] Crear la estructura básica del proyecto
+- [x] Implementar la función de carga y preprocesamiento de audio
+- [x] Integrar el modelo Whisper para transcripción
+- [x] Desarrollar la interfaz de usuario con Gradio
+- [x] Implementar la función de grabación de audio en tiempo real
+
+## Backlog (Fase 1: Transcripción)
+- [ ] Mejorar estetica general de la aplicacion
+- [ ] Optimizar el rendimiento para archivos de audio grandes
+- [ ] Crear sistema de exportación de resultados (JSON)
+- [ ] Desarrollar funciones para segmentación de audio
+
+## Tareas Planificadas (Fase 2: Generación de Consultas)
+- [ ] Integrar la biblioteca de Google Generative AI para Gemini
+- [ ] Crear estructura para los prompt templates
+- [ ] Implementar el módulo de procesamiento de texto transcrito
+- [ ] Desarrollar la función de generación de consultas estructuradas
+- [ ] Expandir la interfaz para mostrar transcripción y consulta generada
+- [ ] Añadir opciones de configuración para el modelo Gemini
+
+## Hitos del Proyecto
+
+### Fase 1: Transcripción de Voz a Texto
+1. **MVP Básico 0.1**: Aplicación funcional que transcriba archivos de audio subidos
+2. **Versión 0.2**: Añadir capacidad de grabación en tiempo real
+3. **Versión 0.3**: Mejorar la interfaz y añadir opciones de configuración
+4. **Versión 0.4**: Optimizar rendimiento y añadir funcionalidades avanzadas
+5. **Versión 1.0**: Producto final de Fase 1 con todas las características de transcripción implementadas
+
+### Fase 2: Generación de Consultas
+6. **Versión 1.1**: Integración básica con Gemini para procesar texto transcrito
+7. **Versión 1.2**: Implementación completa de generación de consultas estructuradas
+8. **Versión 1.3**: Mejora de precisión y relevancia en las consultas generadas
+9. **Versión 2.0**: Producto final con integración completa de transcripción y generación de consultas
+
+## Problemas y Descubrimientos
+- Pendiente de identificar limitaciones de hardware para modelos grandes de Whisper
+- Investigar las mejores prácticas para optimizar la precisión de transcripción
+- Determinar la mejor estrategia para prompt engineering con Gemini para la generación de consultas
+- Evaluar el balance entre precisión y tiempo de respuesta en la generación de consultas
+
+## Completado
+- [x] Definir el alcance del proyecto
+- [x] Investigar implementaciones de ejemplo (EnkrateiaLucca y xAlpharax)
+- [x] Crear documentos de planificación (PLANNING.md)
+- [x] Crear documento de seguimiento de tareas (TASK.md)
+- [x] Configurar el entorno de desarrollo con todas las dependencias
+- [x] Crear la estructura básica del proyecto
+- [x] Implementar la función de carga y preprocesamiento de audio
+- [x] Integrar el modelo Whisper para transcripción
+- [x] Desarrollar la interfaz de usuario con Gradio
+- [x] Implementar la función de grabación de audio en tiempo real
+
+## Notas
+- Para actualizar este archivo: *"Update TASK.md to mark XYZ as done and add ABC as a new task."*
+- Revisar regularmente PLANNING.md para mantener alineación con la visión del proyecto

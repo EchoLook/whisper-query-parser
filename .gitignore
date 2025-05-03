@@ -1,0 +1,72 @@
+# Python bytecode files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Distribution / packaging
+dist/
+build/
+*.egg-info/
+
+# Virtual environments
+venv/
+env/
+.env/
+.venv/
+
+# Environment variables
+.env
+.env.local
+
+# Model files - pueden ser grandes y deben ser descargados por cada usuario
+*.pt
+*.pth
+*.onnx
+*.bin
+models/
+
+# Audio files and transcripts
+*.wav
+*.mp3
+*.ogg
+*.flac
+*.m4a
+*.aac
+transcripts/
+recordings/
+
+# Gradio cache
+.gradio/
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# IDE files
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Testing
+.coverage
+htmlcov/
+.pytest_cache/
+
+# Logs
+logs/
+*.log
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# Dependency files
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Output files
+exports/
+output/
+results/
+*.json
+*.csv 
