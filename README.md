@@ -161,6 +161,23 @@ Response:
 }
 ```
 
+### Docker
+
+Para facilitar el despliegue en cualquier sistema, whisper-query-parser también está disponible como contenedor Docker.
+
+1. Usando Docker Compose (recomendado):
+   ```bash
+   docker-compose up -d
+   ```
+
+2. Usando Docker directamente:
+   ```bash
+   docker build -t whisper-query-parser .
+   docker run -d -p 8000:8000 -v $(pwd)/exports:/app/exports --name whisper-query-parser-api whisper-query-parser
+   ```
+
+Para más detalles sobre la configuración y uso con Docker, consulta [DOCKER.md](DOCKER.md).
+
 ### Example Use Cases
 
 #### Fashion E-Commerce

@@ -23,6 +23,7 @@
 ## API
 - [x] Implementar API REST con FastAPI para transcripción y generación de consultas
 - [x] Crear documentación de la API para desarrolladores
+- [x] Dockerizar la aplicación para facilitar su despliegue
 - [ ] Implementar pruebas de integración para la API
 - [ ] Optimizar rendimiento de la API para múltiples peticiones simultáneas
 
@@ -79,6 +80,7 @@
 - [x] Implementar API REST con FastAPI para transcripción y generación de consultas
 - [x] Crear documentación de la API para desarrolladores
 - [x] Desarrollar cliente de ejemplo para la API
+- [x] Dockerizar la aplicación para facilitar su despliegue
 
 ## Notas
 - Para actualizar este archivo: *"Update TASK.md to mark XYZ as done and add ABC as a new task."*

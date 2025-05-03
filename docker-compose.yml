@@ -1,0 +1,17 @@
+version: '3'
+
+services:
+  whisper-query-parser-api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./exports:/app/exports
+    environment:
+      - WHISPER_MODEL=base
+      - DEFAULT_LANGUAGE=auto-detect
+      # Uncomment and set your Google API key to enable query generation
+      # - GOOGLE_API_KEY=your_gemini_api_key_here
+    restart: unless-stopped 
